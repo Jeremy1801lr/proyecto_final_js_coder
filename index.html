@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="description"
+      content="A front-end template that helps you build fast, modern mobile web apps."
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0"
+    />
+    <title>Cambio de Divisas</title>
+    <meta name="mobile-web-app-capable" content="yes" />
+    <link rel="shortcut icon" href="images/favicon1.png" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link
+      rel="stylesheet"
+      href="https://code.getmdl.io/1.3.0/material.teal-red.min.css"
+    />
+    <link rel="stylesheet" href="./css/getmdl-select.min.css" />
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+  </head>
+  <body>
+    <div
+      class="demo-layout mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-100"
+    >
+      <div class="color_fondo"></div>
+      <main class="demo-main mdl-layout__content">
+        <div class="demo-container mdl-grid">
+          <div
+            class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"
+          ></div>
+          <div
+            class="demo-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col"
+          >
+            <h3>Convertidor de Divisas</h3>
+            <div class="divider"></div>
+            <div>
+              <h4>Selecciona las Monedas</h4>
+              <form id="form">
+                <div>
+                  <div
+                    class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select"
+                  >
+                    <input
+                      type="text"
+                      value=""
+                      class="mdl-textfield__input"
+                      id="moneda_base"
+                      readonly
+                    />
+                    <input type="hidden" value="" name="moneda_base" />
+                    <i class="mdl-icon-toggle__label material-icons"
+                      >keyboard_arrow_down</i
+                    >
+                    <label for="moneda_base" class="mdl-textfield__label"
+                      >Moneda Base</label
+                    >
+                    <ul
+                      for="moneda_base"
+                      class="mdl-menu mdl-menu--bottom-left mdl-js-menu"
+                    >
+                      <li class="mdl-menu__item" data-val="crc">
+                        Colones - CRC
+                      </li>
+                      <li class="mdl-menu__item" data-val="arg">
+                        Pesos Argentinos - ARG
+                      </li>
+                      <li class="mdl-menu__item" data-val="usd">
+                        Dolares - USD
+                      </li>
+                    </ul>
+                  </div>
+                  <button
+                    class="mdl-button mdl-js-button mdl-button--icon button-currency"
+                  >
+                    <span class="material-symbols-outlined">
+                      currency_exchange
+                    </span>
+                  </button>
+                  <div
+                    class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select"
+                  >
+                    <input
+                      type="text"
+                      value=""
+                      class="mdl-textfield__input"
+                      id="moneda_a_convertir"
+                      readonly
+                    />
+                    <input type="hidden" value="" name="moneda_a_convertir" />
+                    <i class="mdl-icon-toggle__label material-icons"
+                      >keyboard_arrow_down</i
+                    >
+                    <label for="moneda_a_convertir" class="mdl-textfield__label"
+                      >Moneda a Convertir</label
+                    >
+                    <ul
+                      for="moneda_a_convertir"
+                      class="mdl-menu mdl-menu--bottom-left mdl-js-menu"
+                    >
+                      <li class="mdl-menu__item" data-val="crc">
+                        Colones - CRC
+                      </li>
+                      <li class="mdl-menu__item" data-val="arg">
+                        Pesos Argentinos - ARG
+                      </li>
+                      <li class="mdl-menu__item" data-val="usd">
+                        Dolares - USD
+                      </li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4>Defina el monto a convertir</h4>
+
+                    <div class="mdl-textfield mdl-js-textfield">
+                      <input
+                        class="mdl-textfield__input"
+                        type="text"
+                        pattern="-?[0-9]*(\.[0-9]+)?"
+                        id="valor"
+                      />
+                      <label class="mdl-textfield__label" for="valor"
+                        >Number...</label
+                      >
+                      <span class="mdl-textfield__error"
+                        >El valor no es válido!</span
+                      >
+                    </div>
+                    <div>
+                      <button
+                        class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
+                      >
+                        Convertir
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div>
+              <h4>Su resultado es:</h4>
+              <p id="resultado_final" style="font-size: 30px">0</p>
+            </div>
+            <div class="divider"></div>
+            <div>
+              <h4>Historial</h4>
+              <table
+                class="mdl-data-table mdl-js-data-table mdl-shadow--2dp table"
+              >
+                <thead>
+                  <tr>
+                    <th class="mdl-data-table__cell--non-numeric">
+                      Tipo de Conversión
+                    </th>
+                    <th>Resultado</th>
+                  </tr>
+                </thead>
+                <tbody id="historial"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <script src="./js/getmdl-select.min.js"></script>
+    <script src="./js/script.js"></script>
+  </body>
+</html>
