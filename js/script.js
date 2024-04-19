@@ -19,9 +19,9 @@ const currency = {
   },
 };
 
-const historial = [];
+let historial = [];
 const form = document.getElementById("form");
-const valor = document.getElementById("valor");
+const monto = document.getElementById("monto");
 
 /* Se declaran las variables para obtener los elementos del resultado final y de la tabla */
 
@@ -40,36 +40,31 @@ function obtenerValores(event) {
   const valores = Object.fromEntries(
     data.entries()
   ); /* Toma los IDs de cada input para (definir cuáles valores se quieren utilizar */
-  console.log(valores);
-  realizarConversion(valores); /* Utiliza la función "realizarConversion" */
+
+  if (!Object.values(valores).some((values) => values === "") && monto.value !== "") { // valida si las monedas tienen valores
+    realizarConversion(valores); /* Utiliza la función "realizarConversion" */
+  }
 }
 
 function realizarConversion(valores) {
-  let tipoCambio =
-    currency[valores.moneda_base][
-      valores.moneda_a_convertir
-    ]; /* Toma los valores anteriormente relacionados como parámetros */
-  let resultado = valor.value * tipoCambio; /* Realiza la operación */
+  let tipoCambio = currency[valores.moneda_base][valores.moneda_a_convertir]; /* Toma los valores anteriormente relacionados como parámetros */
+  let conversion = monto.value * tipoCambio; /* Realiza la operación */
+  let resultadoCambio = `${currency[valores.moneda_a_convertir]["simbolo"]}${conversion.toFixed(2)}`; //concatena el simbolo de la moneda con la conversión
+  let monedaConversion = `${valores.moneda_base} - ${valores.moneda_a_convertir}`; // concatena las monedas
 
   historial.push({
-    conversion: `${valores.moneda_base} - ${valores.moneda_a_convertir}` /* Genera un solo Strign para el "localStorage" para almacenar los valores */,
-    resultado: `${
-      currency[valores.moneda_a_convertir]["simbolo"]
-    }${resultado.toFixed(
-      2
-    )}` /* Se toma el resultado convertido y se le agrega el símbolo correspondiente */,
+    conversion: monedaConversion /* Genera un solo Strign para el "localStorage" para almacenar los valores */,
+    resultado: resultadoCambio,
+    monto: `${monto.value}` /* Se toma el resultado convertido y se le agrega el símbolo correspondiente */,
   });
-
   /* Utiliza las siguientes funciones para guardar y mostrar el resultado en el historial */
-  guardarHistorial(valores, resultado);
-  mostrarResultado(resultado, valores);
+  guardarHistorial(valores, conversion);
+  mostrarResultado(conversion, valores);
 }
 
 /* Se toma del array "currency" tanto el símbolo correspondiente más el resultado "fixeado" con dos decimales */
 function mostrarResultado(resultado, valores) {
-  resultado_final.innerHTML = `${
-    currency[valores.moneda_a_convertir]["simbolo"]
-  }${resultado.toFixed(2)}`;
+  resultado_final.innerHTML = `${currency[valores.moneda_a_convertir]["simbolo"]}${resultado.toFixed(2)}`;
 }
 
 /* Se crea una variable para recoger los datos anteriormente almacenados del localStorage y cada elemento guardado se agrega adyacentemente a cada sección de la tabla del historial */
@@ -78,9 +73,10 @@ function mostartHistorial() {
   if (obtenerHistorial) {
     obtenerHistorial.forEach((element) => {
       let row = `<tr>
-                    <td class="mdl-data-table__cell--non-numeric">${element.conversion.toUpperCase()}</td>
-                    <td>${element.resultado}</td>
-                  </tr>`;
+                  <td class="mdl-data-table__cell--non-numeric">${element.conversion.toUpperCase()}</td>
+                  <td>${element.monto}</td>
+                  <td>${element.resultado}</td>
+                 </tr>`;
       tablaHistorial.insertAdjacentHTML("afterbegin", row);
     });
   }
@@ -88,16 +84,15 @@ function mostartHistorial() {
 
 /* Se guardan los datos mostrados en el historial, dentro del localStorage, generando también una tabla para cada elemento */
 function guardarHistorial(valores, resultado) {
-  let obtenerHistorial = localStorage.getItem("historial");
-  obtenerHistorial = JSON.parse(obtenerHistorial || "[]");
-  let newHistorial = historial.concat(obtenerHistorial);
+  let obtenerHistorial = JSON.parse(localStorage.getItem("historial") || "[]");
+  let newHistorial = obtenerHistorial.concat(historial)
   localStorage.setItem("historial", JSON.stringify(newHistorial));
+  historial = []; //limpiar el array luego de mostrar datos
   let row = `<tr>
-                    <td class="mdl-data-table__cell--non-numeric">${valores.moneda_base.toUpperCase()} - ${valores.moneda_a_convertir.toUpperCase()}</td>
-                    <td>${`${
-                      currency[valores.moneda_a_convertir]["simbolo"]
-                    }${resultado.toFixed(2)}`}</td>
-                  </tr>`;
+              <td class="mdl-data-table__cell--non-numeric">${valores.moneda_base.toUpperCase()} - ${valores.moneda_a_convertir.toUpperCase()}</td>
+              <td>${monto.value}</td>
+              <td>${`${currency[valores.moneda_a_convertir]["simbolo"]}${resultado.toFixed(2)}`}</td>
+             </tr>`;
   tablaHistorial.insertAdjacentHTML("afterbegin", row);
 }
 

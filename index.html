@@ -84,13 +84,6 @@
                       </li>
                     </ul>
                   </div>
-                  <button
-                    class="mdl-button mdl-js-button mdl-button--icon button-currency"
-                  >
-                    <span class="material-symbols-outlined">
-                      currency_exchange
-                    </span>
-                  </button>
                   <div
                     class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select"
                   >
@@ -131,13 +124,13 @@
                         class="mdl-textfield__input"
                         type="text"
                         pattern="-?[0-9]*(\.[0-9]+)?"
-                        id="valor"
+                        id="monto"
                       />
-                      <label class="mdl-textfield__label" for="valor"
-                        >Number...</label
+                      <label class="mdl-textfield__label" for="monto"
+                        >Monto</label
                       >
                       <span class="mdl-textfield__error"
-                        >El valor no es válido!</span
+                        >El monto no es válido!</span
                       >
                     </div>
                     <div>
@@ -166,6 +159,7 @@
                     <th class="mdl-data-table__cell--non-numeric">
                       Tipo de Conversión
                     </th>
+                    <th>Monto Convertido</th>
                     <th>Resultado</th>
                   </tr>
                 </thead>
