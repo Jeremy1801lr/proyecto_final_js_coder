@@ -51,5 +51,6 @@
 .divider {
   border: 0.2px solid #d1d1d1 !important;
   margin: 20px;
+  padding: 0;
 }
 

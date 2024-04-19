@@ -1,3 +1,5 @@
+/* Aquí van los objetos que se utilizan como monedas base y su equivalente en las otras monedas */
+
 const currency = {
   crc: {
     usd: 0.0019736214,
@@ -18,6 +20,8 @@ const currency = {
     simbolo: "$",
   },
 };
+
+/* Un array vació que gardará los resultados de los montos convertidos y dos variables que obtienen los valores de "form" y "monto" */
 
 let historial = [];
 const form = document.getElementById("form");
